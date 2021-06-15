@@ -65,16 +65,16 @@ jobs:
     - name: Define environment variables for serial build
       if: ${{ matrix.enable-mpi == false }}
       run: |
-        echo "MKCHECKFLAGS=\"-j 2\"" >> $GITHUB_ENV
-        echo "CPPFLAGS=\"${HDF5_SERIAL_CPPFLAGS} ${CPPFLAGS}\"" >> $GITHUB_ENV
-        echo "LDFLAGS=\"${HDF5_SERIAL_LDFLAGS} ${LDFLAGS}\"" >> $GITHUB_ENV
+        echo "MKCHECKFLAGS=-j 2" >> $GITHUB_ENV
+        echo "CPPFLAGS=${HDF5_SERIAL_CPPFLAGS} ${CPPFLAGS}" >> $GITHUB_ENV
+        echo "LDFLAGS=${HDF5_SERIAL_LDFLAGS} ${LDFLAGS}" >> $GITHUB_ENV
 
     - name: Define environment variables for MPI build
       if: matrix.enable-mpi
       run: |
         echo "MKCHECKFLAGS=" >> $GITHUB_ENV
-        echo "CPPFLAGS=\"${HDF5_PARALLEL_CPPFLAGS} ${CPPFLAGS}\"" >> $GITHUB_ENV
-        echo "LDFLAGS=\"${HDF5_PARALLEL_LDFLAGS} ${LDFLAGS}\"" >> $GITHUB_ENV
+        echo "CPPFLAGS=${HDF5_PARALLEL_CPPFLAGS} ${CPPFLAGS}" >> $GITHUB_ENV
+        echo "LDFLAGS=${HDF5_PARALLEL_LDFLAGS} ${LDFLAGS}" >> $GITHUB_ENV
         echo "CC=mpicc" >> $GITHUB_ENV
         echo "CXX=mpic++" >> $GITHUB_ENV
         echo "HDF5_MPI=ON" >> $GITHUB_ENV
@@ -107,10 +107,6 @@ jobs:
 
     - name: configure
       run: |
-        [ -d "/usr/include/hdf5/serial" ] && echo "/usr/include/hdf5/serial exists" && ls -alhtr /usr/include/hdf5/serial;
-        [ -d "/usr/include/hdf5/openmpi" ] && echo "/usr/include/hdf5/openmpi exists" && ls -alhtr /usr/include/hdf5/openmpi;
-        [ -d "/usr/lib/x86_64-linux-gnu/hdf5/serial" ] && echo "/usr/lib/x86_64-linux-gnu/hdf5/serial exists" && ls -alhtr /usr/lib/x86_64-linux-gnu/hdf5/serial;
-        [ -d "/usr/lib/x86_64-linux-gnu/hdf5/openmpi" ] && echo "/usr/lib/x86_64-linux-gnu/hdf5/openmpi exists" && ls -alhtr /usr/lib/x86_64-linux-gnu/hdf5/openmpi;
         ./configure --enable-maintainer-mode --prefix=${HOME}/local --with-libctl=${HOME}/local/share/libctl ${{ matrix.configure-options }} || cat config.log
 
     - name: make
