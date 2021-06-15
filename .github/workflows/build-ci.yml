@@ -16,18 +16,18 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # - name-prefix: "Python 3.6 without MPI"
-          #   enable-mpi: false
-          #   configure-options: "--without-mpi"
-          #   python-version: "3.6"
+          - name-prefix: "Python 3.6 without MPI"
+            enable-mpi: false
+            configure-options: "--without-mpi"
+            python-version: "3.6"
           - name-prefix: "Python 3.9 without MPI"
             enable-mpi: false
             configure-options: "--without-mpi"
             python-version: "3.9"
-          # - name-prefix: "Python 3.6 with MPI"
-          #   enable-mpi: true
-          #   configure-options: "--with-mpi"
-          #   python-version: "3.6"
+          - name-prefix: "Python 3.6 with MPI"
+            enable-mpi: true
+            configure-options: "--with-mpi"
+            python-version: "3.6"
           - name-prefix: "Python 3.9 with MPI"
             enable-mpi: true
             configure-options: "--with-mpi"
@@ -117,19 +117,6 @@ jobs:
       run: |
         pushd build && make ${MKCHECKFLAGS} distcheck DISTCHECK_CONFIGURE_FLAGS="--with-libctl=${HOME}/local/share/libctl ${{ matrix.configure-options }}" && MAKE_DISTCHECK_EXIT_CODE=0
         echo "MAKE_DISTCHECK_EXIT_CODE=${MAKE_DISTCHECK_EXIT_CODE}" >> $GITHUB_ENV
-
-    - name: Run Python tests
-      env:
-        MEEP_SKIP_LARGE_TESTS: 1
-      run: |
-        export PYTHONPATH="${PWD}/python:${PYTHONPATH}"
-        if [[ "${MAKE_DISTCHECK_EXIT_CODE}" = "0" ]]; then
-           pushd build &&
-           make ${MKCHECKFLAGS} &&
-           pushd python &&
-           pytest tests &&
-           popd;
-        fi
 
     - name: Output logs
       run: |
