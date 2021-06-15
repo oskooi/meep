@@ -114,14 +114,12 @@ jobs:
         ../configure --enable-maintainer-mode --prefix=${HOME}/local --with-libctl=${HOME}/local/share/libctl ${{ matrix.configure-options }}
 
     - name: make distcheck
-      run: |
-        pushd build && make ${MKCHECKFLAGS} distcheck DISTCHECK_CONFIGURE_FLAGS="--with-libctl=${HOME}/local/share/libctl ${{ matrix.configure-options }}" && MAKE_DISTCHECK_EXIT_CODE=0
-        echo "MAKE_DISTCHECK_EXIT_CODE=${MAKE_DISTCHECK_EXIT_CODE}" >> $GITHUB_ENV
+      run: pushd build && make ${MKCHECKFLAGS} distcheck DISTCHECK_CONFIGURE_FLAGS="--with-libctl=${HOME}/local/share/libctl ${{ matrix.configure-options }}"
 
     - name: Output logs
       run: |
-        - BUILD_PREFIX=${GITHUB_WORKSPACE}/build/meep-${MEEP_VERSION}/_build/sub
-        - MEEP_LOG=${BUILD_PREFIX}/tests/test-suite.log
-        - if [[ -e ${MEEP_LOG} ]]; then cat ${MEEP_LOG}; fi
-        - PYTHON_LOG=${BUILD_PREFIX}/python/test-suite.log
+        - BUILD_PREFIX="${GITHUB_WORKSPACE}/build/meep-${MEEP_VERSION}/_build/sub"
+        - CPP_LOG="${BUILD_PREFIX}/tests/test-suite.log"
+        - if [[ -e ${CPP_LOG} ]]; then cat ${CPP_LOG}; fi
+        - PYTHON_LOG="${BUILD_PREFIX}/python/test-suite.log"
         - if [[ -e ${PYTHON_LOG} ]]; then cat ${PYTHON_LOG}; fi
