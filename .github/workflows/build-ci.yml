@@ -110,7 +110,7 @@ jobs:
         ./configure --enable-maintainer-mode --prefix=${HOME}/local --with-libctl=${HOME}/local/share/libctl ${{ matrix.configure-options }} || cat config.log
 
     - name: make
-      run: make ${MKCHECKFLAGS} distcheck DISTCHECK_CONFIGURE_FLAGS="--with-libctl=${HOME}/local/share/libctl
+      run: make ${MKCHECKFLAGS} distcheck DISTCHECK_CONFIGURE_FLAGS="--with-libctl=${HOME}/local/share/libctl ${{ matrix.configure-options }}"
 
     - name: Run C++ tests
       run: pushd tests && make ${MKCHECKFLAGS} check && popd
