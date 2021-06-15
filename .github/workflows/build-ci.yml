@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ $default-branch ]
+    branches: [ master ]
   pull_request:
-    branches: [ $default-branch ]
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
@@ -118,7 +118,6 @@ jobs:
 
     - name: Output logs
       run: |
-        - echo "GITHUB_WORKSPACE=${GITHUB_WORKSPACE}"
         - echo "PWD=${PWD}"
         - BUILD_PREFIX="${PWD}/build/meep-${MEEP_VERSION}/_build/sub"
         - CPP_LOG="${BUILD_PREFIX}/tests/test-suite.log"
