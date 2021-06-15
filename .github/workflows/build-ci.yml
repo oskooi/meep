@@ -16,18 +16,18 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name-prefix: "Python 3.6 without MPI"
-            enable-mpi: false
-            configure-options: "--without-mpi"
-            python-version: "3.6"
+          # - name-prefix: "Python 3.6 without MPI"
+          #   enable-mpi: false
+          #   configure-options: "--without-mpi"
+          #   python-version: "3.6"
           - name-prefix: "Python 3.9 without MPI"
             enable-mpi: false
             configure-options: "--without-mpi"
             python-version: "3.9"
-          - name-prefix: "Python 3.6 with MPI"
-            enable-mpi: true
-            configure-options: "--with-mpi"
-            python-version: "3.6"
+          # - name-prefix: "Python 3.6 with MPI"
+          #   enable-mpi: true
+          #   configure-options: "--with-mpi"
+          #   python-version: "3.6"
           - name-prefix: "Python 3.9 with MPI"
             enable-mpi: true
             configure-options: "--with-mpi"
@@ -106,7 +106,12 @@ jobs:
       run: autoreconf --verbose --install --symlink --force
 
     - name: configure
-      run: ./configure --enable-maintainer-mode --prefix=${HOME}/local --with-libctl=${HOME}/local/share/libctl ${{ matrix.configure-options }}
+      run: |
+        [ -d "/usr/include/hdf5/serial" ] && echo "/usr/include/hdf5/serial exists" && ls -alhtr /usr/include/hdf5/serial;
+        [ -d "/usr/include/hdf5/openmpi" ] && echo "/usr/include/hdf5/openmpi exists" && ls -alhtr /usr/include/hdf5/openmpi;
+        [ -d "/usr/lib/x86_64-linux-gnu/hdf5/serial" ] && echo "/usr/lib/x86_64-linux-gnu/hdf5/serial exists" && ls -alhtr /usr/lib/x86_64-linux-gnu/hdf5/serial;
+        [ -d "/usr/lib/x86_64-linux-gnu/hdf5/openmpi" ] && echo "/usr/lib/x86_64-linux-gnu/hdf5/openmpi exists" && ls -alhtr /usr/lib/x86_64-linux-gnu/hdf5/openmpi;
+        ./configure --enable-maintainer-mode --prefix=${HOME}/local --with-libctl=${HOME}/local/share/libctl ${{ matrix.configure-options }} || cat config.log
 
     - name: make
       run: make ${MKCHECKFLAGS} distcheck DISTCHECK_CONFIGURE_FLAGS="--with-libctl=${HOME}/local/share/libctl
