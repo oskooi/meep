@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ $default-branch ]
   pull_request:
-    branches: [ master ]
+    branches: [ $default-branch ]
   workflow_dispatch:
 
 jobs:
@@ -102,24 +102,26 @@ jobs:
       if: matrix.enable-mpi
       run: pip install mpi4py
 
-    - name: autoreconf
+    - name: Run autoreconf
       run: |
         autoreconf --verbose --install --symlink --force
         MEEP_VERSION=$(./configure -V | grep meep | awk '{print $3}')
         echo "MEEP_VERSION=${MEEP_VERSION}" >> $GITHUB_ENV
 
-    - name: configure
+    - name: Run configure
       run: |
         mkdir -p build && pushd build
         ../configure --enable-maintainer-mode --prefix=${HOME}/local --with-libctl=${HOME}/local/share/libctl ${{ matrix.configure-options }}
 
-    - name: make distcheck
+    - name: Run make distcheck
       run: pushd build && make ${MKCHECKFLAGS} distcheck DISTCHECK_CONFIGURE_FLAGS="--with-libctl=${HOME}/local/share/libctl ${{ matrix.configure-options }}"
 
     - name: Output logs
       run: |
-        - BUILD_PREFIX="${GITHUB_WORKSPACE}/build/meep-${MEEP_VERSION}/_build/sub"
+        - echo "GITHUB_WORKSPACE=${GITHUB_WORKSPACE}"
+        - echo "PWD=${PWD}"
+        - BUILD_PREFIX="${PWD}/build/meep-${MEEP_VERSION}/_build/sub"
         - CPP_LOG="${BUILD_PREFIX}/tests/test-suite.log"
-        - if [[ -e ${CPP_LOG} ]]; then cat ${CPP_LOG}; fi
+        - [ -f ${CPP_LOG} ] && cat ${CPP_LOG};
         - PYTHON_LOG="${BUILD_PREFIX}/python/test-suite.log"
-        - if [[ -e ${PYTHON_LOG} ]]; then cat ${PYTHON_LOG}; fi
+        - [ -f ${PYTHON_LOG} ] && cat ${PYTHON_LOG};
