@@ -105,8 +105,8 @@ jobs:
     - name: autoreconf
       run: |
         autoreconf --verbose --install --symlink --force
-        export MEEP_VERSION=$(./configure -V | grep meep | awk '{print $3}')
-        echo ${MEEP_VERSION} >> $GITHUB_ENV
+        MEEP_VERSION=$(./configure -V | grep meep | awk '{print $3}')
+        echo "MEEP_VERSION=${MEEP_VERSION}" >> $GITHUB_ENV
 
     - name: configure
       run: |
