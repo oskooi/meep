@@ -118,8 +118,7 @@ jobs:
 
     - name: Output logs
       run: |
-        - echo "PWD=${PWD}"
-        - BUILD_PREFIX="${PWD}/build/meep-${MEEP_VERSION}/_build/sub"
+        - BUILD_PREFIX="${{ github.workspace }}/build/meep-${MEEP_VERSION}/_build/sub"
         - CPP_LOG="${BUILD_PREFIX}/tests/test-suite.log"
         - [ -f ${CPP_LOG} ] && cat ${CPP_LOG};
         - PYTHON_LOG="${BUILD_PREFIX}/python/test-suite.log"
