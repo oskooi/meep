@@ -115,7 +115,7 @@ jobs:
 
     - name: make distcheck
       run: |
-        make ${MKCHECKFLAGS} distcheck DISTCHECK_CONFIGURE_FLAGS="--with-libctl=${HOME}/local/share/libctl ${{ matrix.configure-options }}" && export MAKE_DISTCHECK_EXIT_CODE=0
+        pushd build && make ${MKCHECKFLAGS} distcheck DISTCHECK_CONFIGURE_FLAGS="--with-libctl=${HOME}/local/share/libctl ${{ matrix.configure-options }}" && MAKE_DISTCHECK_EXIT_CODE=0
         echo "MAKE_DISTCHECK_EXIT_CODE=${MAKE_DISTCHECK_EXIT_CODE}" >> $GITHUB_ENV
 
     - name: Run Python tests
@@ -124,6 +124,7 @@ jobs:
       run: |
         export PYTHONPATH="${PWD}/python:${PYTHONPATH}"
         if [[ "${MAKE_DISTCHECK_EXIT_CODE}" = "0" ]]; then
+           pushd build &&
            make ${MKCHECKFLAGS} &&
            pushd python &&
            pytest tests &&
