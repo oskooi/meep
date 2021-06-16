@@ -134,11 +134,16 @@ jobs:
         make ${MKCHECKFLAGS} distcheck DISTCHECK_CONFIGURE_FLAGS="--with-libctl=${HOME}/local/share/libctl ${MPICONF}" &&
         popd
 
-    - name: Output logs
-      run: |
-        BUILD_PREFIX="${{ github.workspace }}/build/meep-${MEEP_VERSION}/_build/sub"
-        ls -alhtr ${BUILD_PREFIX}
-        CPP_LOG="${BUILD_PREFIX}/tests/test-suite.log"
-        [ -f ${CPP_LOG} ] && cat ${CPP_LOG};
-        PYTHON_LOG="${BUILD_PREFIX}/python/test-suite.log"
-        [ -f ${PYTHON_LOG} ] && cat ${PYTHON_LOG};
+    - name: Archive C++ test logs
+      uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: cpp-tests-mpi-${{ matrix.enable-mpi }}-log
+        path: build/meep-${MEEP_VERSION}/_build/sub/tests/test-suite.log
+
+    - name: Archive Python test logs
+      uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: py${{ matrix.python-version }}-tests-mpi-${{ matrix.enable-mpi }}-log
+        path: build/meep-${MEEP_VERSION}/_build/sub/python/test-suite.log
