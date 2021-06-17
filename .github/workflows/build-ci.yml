@@ -134,24 +134,24 @@ jobs:
         make ${MKCHECKFLAGS} distcheck DISTCHECK_CONFIGURE_FLAGS="--with-libctl=${HOME}/local/share/libctl ${MPICONF}" && export MAKE_DISTCHECK_EXIT_CODE=0
         popd
 
-    - name: Output C++ logs (1)
-      run: cat /home/runner/work/meep/meep/build/meep-1.18.0/_build/sub/test/test-suite.log
-
-    - name: Output C++ logs (2)
-      run: cat ${{ github.workspace }}/build/${MEEP_VERSION}/_build/sub/test/test-suite.log
-
     - name: Output Python logs (1)
       run: cat /home/runner/work/meep/meep/build/meep-1.18.0/_build/sub/python/test-suite.log
 
     - name: Output Python logs (2)
       run: cat ${{ github.workspace }}/build/${MEEP_VERSION}/_build/sub/python/test-suite.log
 
+    - name: Output C++ logs (1)
+      run: cat /home/runner/work/meep/meep/build/meep-1.18.0/_build/sub/tests/test-suite.log
+
+    - name: Output C++ logs (2)
+      run: cat ${{ github.workspace }}/build/${MEEP_VERSION}/_build/sub/tests/test-suite.log
+
     - name: Archive C++ test logs
       uses: actions/upload-artifact@v2
       if: failure()
       with:
         name: cpp-tests-mpi-${{ matrix.enable-mpi }}-log
-        path: /home/runner/work/meep/meep/build/meep-1.18.0/_build/sub/test/test-suite.log
+        path: /home/runner/work/meep/meep/build/meep-1.18.0/_build/sub/tests/test-suite.log
 
     - name: Archive Python test logs
       uses: actions/upload-artifact@v2
