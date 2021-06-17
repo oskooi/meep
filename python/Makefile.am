@@ -36,56 +36,56 @@ endif
 
 TESTS =                                   \
     $(TEST_DIR)/test_3rd_harm_1d.py            \
-    $(TEST_DIR)/test_absorber_1d.py            \
-    $(TEST_DIR)/test_adjoint_solver.py         \
-    $(TEST_DIR)/test_adjoint_jax.py            \
-    $(TEST_DIR)/test_antenna_radiation.py      \
-    $(TEST_DIR)/test_array_metadata.py         \
-    $(TEST_DIR)/test_bend_flux.py              \
-    $(BINARY_GRATING_TEST)                \
-    $(TEST_DIR)/test_cavity_arrayslice.py      \
-    $(TEST_DIR)/test_cavity_farfield.py        \
-    $(TEST_DIR)/test_chunk_layout.py           \
-    $(TEST_DIR)/test_chunks.py                 \
-    $(TEST_DIR)/test_cyl_ellipsoid.py          \
-    $(TEST_DIR)/test_dft_energy.py             \
-    $(TEST_DIR)/test_dft_fields.py             \
-    ${DIFFRACTED_PLANEWAVE_TEST}          \
-    ${DISPERSIVE_EIGENMODE_TEST}          \
-    $(TEST_DIR)/test_divide_mpi_processes.py   \
-    $(TEST_DIR)/test_eigfreq.py                \
-    $(TEST_DIR)/test_faraday_rotation.py       \
-    $(TEST_DIR)/test_field_functions.py        \
-    $(TEST_DIR)/test_force.py                  \
-    $(TEST_DIR)/test_fragment_stats.py         \
-    $(TEST_DIR)/test_gaussianbeam.py           \
-    $(TEST_DIR)/test_geom.py                   \
-    $(TEST_DIR)/test_get_point.py              \
-    $(TEST_DIR)/test_holey_wvg_bands.py        \
-    $(TEST_DIR)/test_holey_wvg_cavity.py       \
-    $(KDOM_TEST)                          \
-    $(TEST_DIR)/test_ldos.py                   \
-    $(MDPYTEST)                           \
-    $(TEST_DIR)/test_material_grid.py          \
-    $(TEST_DIR)/test_medium_evaluations.py     \
-    $(MPBPYTEST)                          \
-    $(MODE_COEFFS_TEST)                   \
-    $(MODE_DECOMPOSITION_TEST)            \
-    $(TEST_DIR)/test_multilevel_atom.py        \
-    $(TEST_DIR)/test_n2f_periodic.py           \
-    $(TEST_DIR)/test_oblique_source.py         \
-    $(TEST_DIR)/test_physical.py               \
-    $(TEST_DIR)/test_prism.py                  \
-    $(TEST_DIR)/test_pw_source.py              \
-    $(TEST_DIR)/test_refl_angular.py           \
-    $(TEST_DIR)/test_ring.py                   \
-    $(TEST_DIR)/test_ring_cyl.py               \
-    $(TEST_DIR)/test_simulation.py             \
-    $(TEST_DIR)/test_special_kz.py             \
-    $(TEST_DIR)/test_source.py                 \
-    $(TEST_DIR)/test_user_defined_material.py  \
-    $(TEST_DIR)/test_visualization.py          \
-    $(WVG_SRC_TEST)
+    # $(TEST_DIR)/test_absorber_1d.py            \
+    # $(TEST_DIR)/test_adjoint_solver.py         \
+    # $(TEST_DIR)/test_adjoint_jax.py            \
+    # $(TEST_DIR)/test_antenna_radiation.py      \
+    # $(TEST_DIR)/test_array_metadata.py         \
+    # $(TEST_DIR)/test_bend_flux.py              \
+    # $(BINARY_GRATING_TEST)                \
+    # $(TEST_DIR)/test_cavity_arrayslice.py      \
+    # $(TEST_DIR)/test_cavity_farfield.py        \
+    # $(TEST_DIR)/test_chunk_layout.py           \
+    # $(TEST_DIR)/test_chunks.py                 \
+    # $(TEST_DIR)/test_cyl_ellipsoid.py          \
+    # $(TEST_DIR)/test_dft_energy.py             \
+    # $(TEST_DIR)/test_dft_fields.py             \
+    # ${DIFFRACTED_PLANEWAVE_TEST}          \
+    # ${DISPERSIVE_EIGENMODE_TEST}          \
+    # $(TEST_DIR)/test_divide_mpi_processes.py   \
+    # $(TEST_DIR)/test_eigfreq.py                \
+    # $(TEST_DIR)/test_faraday_rotation.py       \
+    # $(TEST_DIR)/test_field_functions.py        \
+    # $(TEST_DIR)/test_force.py                  \
+    # $(TEST_DIR)/test_fragment_stats.py         \
+    # $(TEST_DIR)/test_gaussianbeam.py           \
+    # $(TEST_DIR)/test_geom.py                   \
+    # $(TEST_DIR)/test_get_point.py              \
+    # $(TEST_DIR)/test_holey_wvg_bands.py        \
+    # $(TEST_DIR)/test_holey_wvg_cavity.py       \
+    # $(KDOM_TEST)                          \
+    # $(TEST_DIR)/test_ldos.py                   \
+    # $(MDPYTEST)                           \
+    # $(TEST_DIR)/test_material_grid.py          \
+    # $(TEST_DIR)/test_medium_evaluations.py     \
+    # $(MPBPYTEST)                          \
+    # $(MODE_COEFFS_TEST)                   \
+    # $(MODE_DECOMPOSITION_TEST)            \
+    # $(TEST_DIR)/test_multilevel_atom.py        \
+    # $(TEST_DIR)/test_n2f_periodic.py           \
+    # $(TEST_DIR)/test_oblique_source.py         \
+    # $(TEST_DIR)/test_physical.py               \
+    # $(TEST_DIR)/test_prism.py                  \
+    # $(TEST_DIR)/test_pw_source.py              \
+    # $(TEST_DIR)/test_refl_angular.py           \
+    # $(TEST_DIR)/test_ring.py                   \
+    # $(TEST_DIR)/test_ring_cyl.py               \
+    # $(TEST_DIR)/test_simulation.py             \
+    # $(TEST_DIR)/test_special_kz.py             \
+    # $(TEST_DIR)/test_source.py                 \
+    # $(TEST_DIR)/test_user_defined_material.py  \
+    # $(TEST_DIR)/test_visualization.py          \
+    # $(WVG_SRC_TEST)
 
 if WITH_COVERAGE
   PY_LOG_COMPILER = coverage run -a --omit=$(top_srcdir)/python/tests/*,${HOME}/virtualenv/*,$(top_srcdir)/python/examples/*

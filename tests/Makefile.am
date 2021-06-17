@@ -16,7 +16,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/src -DDATADIR=\"$(srcdir)/\"
 
 .SUFFIXES = .dac .done
 
-check_PROGRAMS = aniso_disp bench bragg_transmission convergence_cyl_waveguide cylindrical flux harmonics integrate known_results near2far one_dimensional physical stress_tensor symmetry three_d two_dimensional 2D_convergence h5test pml pw-source-ll ring-ll cyl-ellipsoid-ll absorber-1d-ll array-slice-ll user-defined-material dft-fields gdsII-3d bend-flux-ll array-metadata
+check_PROGRAMS = aniso_disp bench # bragg_transmission convergence_cyl_waveguide cylindrical flux harmonics integrate known_results near2far one_dimensional physical stress_tensor symmetry three_d two_dimensional 2D_convergence h5test pml pw-source-ll ring-ll cyl-ellipsoid-ll absorber-1d-ll array-slice-ll user-defined-material dft-fields gdsII-3d bend-flux-ll array-metadata
 
 array_metadata_SOURCES = array-metadata.cpp
 array_metadata_LDADD   = $(MEEPLIBS)
@@ -107,7 +107,7 @@ user_defined_material_LDADD   = $(MEEPLIBS)
 
 dist_noinst_DATA = cyl-ellipsoid-eps-ref.h5 array-slice-ll-ref.h5 gdsII-3d.gds
 
-TESTS = aniso_disp bench bragg_transmission convergence_cyl_waveguide cylindrical flux harmonics integrate known_results near2far one_dimensional physical stress_tensor symmetry three_d two_dimensional 2D_convergence h5test pml
+TESTS = aniso_disp bench # bragg_transmission convergence_cyl_waveguide cylindrical flux harmonics integrate known_results near2far one_dimensional physical stress_tensor symmetry three_d two_dimensional 2D_convergence h5test pml
 
 if WITH_MPI
   LOG_COMPILER = $(RUNCODE)
