@@ -133,17 +133,25 @@ jobs:
         pushd build
         make ${MKCHECKFLAGS} distcheck DISTCHECK_CONFIGURE_FLAGS="--with-libctl=${HOME}/local/share/libctl ${MPICONF}" && export MAKE_DISTCHECK_EXIT_CODE=0
         popd
-        [ -d "build" ] && ls -alhtr build/;
-        [ -d "build/meep-${MEEP_VERSION}" ] && ls -alhtr build/meep-${MEEP_VERSION}/;
-        [ -d "build/meep-${MEEP_VERSION}/_build" ] && ls -alhtr build/meep-${MEEP_VERSION}/_build/;
-        [ -d "build/meep-${MEEP_VERSION}/_build/sub" ] && ls -alhtr build/meep-${MEEP_VERSION}/_build/sub/;
-        [ -d "build/meep-${MEEP_VERSION}/_build/sub/tests" ] && ls -alhtr build/meep-${MEEP_VERSION}/_build/sub/tests/;
+
+    - name: Print directory info
+      run: |
+        [ -d "build" ] && echo "build" && ls -alhtr build/;
+        [ -d "build/meep-${MEEP_VERSION}" ] && echo "build/meep-${MEEP_VERSION}" && ls -alhtr build/meep-${MEEP_VERSION}/;
+        [ -d "build/meep-${MEEP_VERSION}/_build" ] && echo "build/meep-${MEEP_VERSION}/_build" && ls -alhtr build/meep-${MEEP_VERSION}/_build/;
+        [ -d "build/meep-${MEEP_VERSION}/_build/sub" ] && echo "build/meep-${MEEP_VERSION}/_build/sub" && ls -alhtr build/meep-${MEEP_VERSION}/_build/sub/;
+        [ -d "build/meep-${MEEP_VERSION}/_build/sub/tests" ] && echo "build/meep-${MEEP_VERSION}/_build/sub/tests" && ls -alhtr build/meep-${MEEP_VERSION}/_build/sub/tests/;
+        [ -d "build/meep-${MEEP_VERSION}/_build/sub/python" ] && echo "build/meep-${MEEP_VERSION}/_build/sub/python" && ls -alhtr build/meep-${MEEP_VERSION}/_build/sub/python/;
+
+    - name: Output logs
+      run: cat /home/runner/work/meep/meep/build/meep-1.18.0/_build/sub/python/test-suite.log
 
     - name: Archive C++ test logs
       uses: actions/upload-artifact@v2
       if: failure()
       with:
         name: cpp-tests-mpi-${{ matrix.enable-mpi }}-log
+        paty: build/meep-${MEEP_VERSION}/_build/sub/tests/
         path: build/meep-${MEEP_VERSION}/_build/sub/tests/test-suite.log
 
     - name: Archive Python test logs
