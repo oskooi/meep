@@ -134,28 +134,28 @@ jobs:
         make ${MKCHECKFLAGS} distcheck DISTCHECK_CONFIGURE_FLAGS="--with-libctl=${HOME}/local/share/libctl ${MPICONF}" && export MAKE_DISTCHECK_EXIT_CODE=0
         popd
 
-    - name: Print directory info
-      run: |
-        [ -d "build" ] && echo "build" && ls -alhtr build/;
-        [ -d "build/meep-${MEEP_VERSION}" ] && echo "build/meep-${MEEP_VERSION}" && ls -alhtr build/meep-${MEEP_VERSION}/;
-        [ -d "build/meep-${MEEP_VERSION}/_build" ] && echo "build/meep-${MEEP_VERSION}/_build" && ls -alhtr build/meep-${MEEP_VERSION}/_build/;
-        [ -d "build/meep-${MEEP_VERSION}/_build/sub" ] && echo "build/meep-${MEEP_VERSION}/_build/sub" && ls -alhtr build/meep-${MEEP_VERSION}/_build/sub/;
-        [ -d "build/meep-${MEEP_VERSION}/_build/sub/tests" ] && echo "build/meep-${MEEP_VERSION}/_build/sub/tests" && ls -alhtr build/meep-${MEEP_VERSION}/_build/sub/tests/;
-        [ -d "build/meep-${MEEP_VERSION}/_build/sub/python" ] && echo "build/meep-${MEEP_VERSION}/_build/sub/python" && ls -alhtr build/meep-${MEEP_VERSION}/_build/sub/python/;
+    - name: Output C++ logs (1)
+      run: cat /home/runner/work/meep/meep/build/meep-1.18.0/_build/sub/test/test-suite.log
 
-    - name: Output logs
+    - name: Output C++ logs (2)
+      run: cat ${{ github.workspace }}/build/${MEEP_VERSION}/_build/sub/test/test-suite.log
+
+    - name: Output Python logs (1)
       run: cat /home/runner/work/meep/meep/build/meep-1.18.0/_build/sub/python/test-suite.log
+
+    - name: Output Python logs (2)
+      run: cat ${{ github.workspace }}/build/${MEEP_VERSION}/_build/sub/python/test-suite.log
 
     - name: Archive C++ test logs
       uses: actions/upload-artifact@v2
       if: failure()
       with:
         name: cpp-tests-mpi-${{ matrix.enable-mpi }}-log
-        path: build/meep-${MEEP_VERSION}/_build/sub/tests/test-suite.log
+        path: /home/runner/work/meep/meep/build/meep-1.18.0/_build/sub/test/test-suite.log
 
     - name: Archive Python test logs
       uses: actions/upload-artifact@v2
       if: failure()
       with:
         name: py${{ matrix.python-version }}-tests-mpi-${{ matrix.enable-mpi }}-log
-        path: build/meep-${MEEP_VERSION}/_build/sub/python/test-suite.log
+        path: /home/runner/work/meep/meep/build/meep-1.18.0/_build/sub/python/test-suite.log
