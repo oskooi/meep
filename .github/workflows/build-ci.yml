@@ -151,7 +151,6 @@ jobs:
       if: failure()
       with:
         name: cpp-tests-mpi-${{ matrix.enable-mpi }}-log
-        paty: build/meep-${MEEP_VERSION}/_build/sub/tests/
         path: build/meep-${MEEP_VERSION}/_build/sub/tests/test-suite.log
 
     - name: Archive Python test logs
