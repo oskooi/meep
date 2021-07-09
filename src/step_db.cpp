@@ -117,7 +117,7 @@ bool fields_chunk::step_db(field_type ft) {
 
       for (size_t i = 0; i < gvs.size(); ++i) {
         STEP_CURL(the_f, cc, f_p, f_m, stride_p, stride_m,
-                  gvs[i], gvs[i].little_owned_corner0(cc), gvs[i].big_corner(),
+                  gv, gvs[i].little_owned_corner0(cc), gvs[i].big_corner(),
                   Courant, dsig, s->sig[dsig],
                   s->kap[dsig], s->siginv[dsig], f_u[cc][cmp], dsigu, s->sig[dsigu], s->kap[dsigu],
                   s->siginv[dsigu], dt, s->conductivity[cc][d_c], s->condinv[cc][d_c],

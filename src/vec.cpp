@@ -1022,7 +1022,7 @@ void grid_volume::find_best_split(int desired_chunks, bool fragment_cost,
     double split_measure = max(left_cost / (desired_chunks / 2), right_cost / (desired_chunks - (desired_chunks / 2)));
     // Give a 30% preference to the longest axis, as a heuristic to prefer lower communication costs
     // when the split_measure is somewhat close.   TODO: use a data-driven communication cost function.
-    if (d == longest_axis) split_measure *= 0.7;
+    //    if (d == longest_axis) split_measure *= 0.7;
     if (split_measure < best_split_measure) {
       best_split_measure = split_measure;
       best_split_point = split_point;
