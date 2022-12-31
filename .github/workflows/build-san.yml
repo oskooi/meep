@@ -20,7 +20,7 @@ jobs:
             debug-options: "-g1"
           - name-suffix: "MSAN"
             sanitizer: "memory"
-            configure-options: "CC=clang CXX=clang++ LD=clang++"
+            configure-options: "CC=clang-10 CXX=clang++-10 LD=clang++-10"
             debug-options: "-gmlt"
           - name-suffix: "UBSAN"
             sanitizer: "undefined"
