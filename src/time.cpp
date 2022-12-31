@@ -32,8 +32,8 @@ namespace {
 constexpr size_t MeepTimingStackSize = 10;
 
 const std::map<time_sink, const char *> DescriptionByTimeSink{
-    {Stepping, "time stepping"},
     {Connecting, "connecting chunks"},
+    {Stepping, "time stepping"},
     {Boundaries, "copying boundaries"},
     {MpiAllTime, "all-all communication"},
     {MpiOneTime, "1-1 communication"},
@@ -41,6 +41,7 @@ const std::map<time_sink, const char *> DescriptionByTimeSink{
     {FourierTransforming, "Fourier transforming"},
     {MPBTime, "MPB mode solver"},
     {GetFarfieldsTime, "far-field transform"},
+    {Other, "everything else"},
     {FieldUpdateB, "updating B field"},
     {FieldUpdateH, "updating H field"},
     {FieldUpdateD, "updating D field"},
@@ -53,7 +54,6 @@ const std::map<time_sink, const char *> DescriptionByTimeSink{
     {BoundarySteppingWE, "boundary stepping WE"},
     {BoundarySteppingPE, "boundary stepping PE"},
     {BoundarySteppingE, "boundary stepping E"},
-    {Other, "everything else"},
 };
 
 std::vector<double> timing_data_vector(const time_sink_to_duration_map &timers) {

@@ -262,7 +262,6 @@ int main(int argc, char *argv[]) {
     if (1 != sscanf(argv[narg + 1], "%le", parm_adrs[np]))
       meep::abort("invalid value %s specified for %s", argv[narg + 1], argv[narg]);
     printf("Setting %s=%e.\n", argv[narg], *(parm_adrs[np]));
-    narg++;
   }
 
   /*--------------------------------------------------------------*/

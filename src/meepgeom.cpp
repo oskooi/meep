@@ -2851,14 +2851,14 @@ void material_grids_addgradient(double *v, size_t ng, size_t nf,
     meep::dft_chunk *current_forward_chunk = fields_f[i]->chunks;
     while (current_adjoint_chunk) {
       if (current_adjoint_chunk->omega.size() != nf)
-        meep::abort("Supplied frequencies %d don't match dft frequencies %d\n", nf,
+        meep::abort("Supplied frequencies %zu don't match dft frequencies %zu\n", nf,
                     current_adjoint_chunk->omega.size());
       c_adjoint_dft_chunks.push_back(current_adjoint_chunk);
       current_adjoint_chunk = current_adjoint_chunk->next_in_dft;
     }
     while (current_forward_chunk) {
       if (current_forward_chunk->omega.size() != nf)
-        meep::abort("Supplied frequencies %d don't match dft frequencies %d\n", nf,
+        meep::abort("Supplied frequencies %zu don't match dft frequencies %zu\n", nf,
                     current_forward_chunk->omega.size());
       c_forward_dft_chunks.push_back(current_forward_chunk);
       current_forward_chunk = current_forward_chunk->next_in_dft;
