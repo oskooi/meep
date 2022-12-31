@@ -48,11 +48,11 @@ comms_sequence optimize_comms_operations(const std::vector<comms_operation> &ope
     // Group send operations by source chunk and accumulate the transfer size - excluding chunk
     // pairs that reside on the same processor.
     if (op.other_proc_id != my_rank()) {
-      send_size_by_my_chunk_idx[op.my_chunk_idx] += op.transfer_size;
+      send_size_by_my_chunk_idx[op.my_chunk_idx] = op.transfer_size;
     }
     else {
       // Make sure that op.my_chunk_idx is represented in the map.
-      send_size_by_my_chunk_idx[op.my_chunk_idx] += 0;
+      send_size_by_my_chunk_idx[op.my_chunk_idx] = 0;
     }
     send_ops_by_my_chunk_idx[op.my_chunk_idx].push_back(op);
   }

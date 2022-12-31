@@ -14,10 +14,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name-suffix: "ASAN"
-            sanitizer: "address"
-            configure-options: ""
-            debug-options: "-g1"
+          # - name-suffix: "ASAN"
+          #   sanitizer: "address"
+          #   configure-options: ""
+          #   debug-options: "-g1"
           - name-suffix: "MSAN"
             sanitizer: "memory"
             configure-options: "CC=clang CXX=clang++ LD=clang++"
