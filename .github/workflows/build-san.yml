@@ -20,7 +20,7 @@ jobs:
             debug-options: "-g1"
           - name-suffix: "MSAN"
             sanitizer: "memory"
-            configure-options: "CC=clang-10 CXX=clang++-10 LD=clang++-10"
+            configure-options: "CC=clang CXX=clang++ LD=clang++"
             debug-options: "-gmlt"
           - name-suffix: "UBSAN"
             sanitizer: "undefined"
@@ -31,7 +31,7 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt-get update -y
-        sudo apt-get install -y autoconf automake clang libaec-dev libctl-dev \
+        sudo apt-get install -y autoconf automake clang-10 libaec-dev libctl-dev \
           libfftw3-dev libgdsii-dev libgsl-dev libharminv-dev libhdf5-dev \
           libtool mpb mpb-dev
     - name: Check out repository
