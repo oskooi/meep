@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: "Test C++ with ${{ matrix.name-suffix }}"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     strategy:
       fail-fast: false
@@ -31,7 +31,7 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt-get update -y
-        sudo apt-get install -y autoconf automake clang-10 libaec-dev libctl-dev \
+        sudo apt-get install -y autoconf automake clang libaec-dev libctl-dev \
           libfftw3-dev libgdsii-dev libgsl-dev libharminv-dev libhdf5-dev \
           libtool mpb mpb-dev
     - name: Check out repository
