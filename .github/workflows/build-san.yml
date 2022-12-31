@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: "Test C++ with ${{ matrix.name-suffix }}"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
@@ -21,11 +21,11 @@ jobs:
           - name-suffix: "MSAN"
             sanitizer: "memory"
             configure-options: "CC=clang CXX=clang++ LD=clang++"
-            debug-options: "-gmlt"
-          - name-suffix: "UBSAN"
-            sanitizer: "undefined"
-            configure-options: "CC=clang CXX=clang++ LD=clang++"
-            debug-options: "-gmlt"
+            debug-options: "-fno-omit-frame-pointer -gmlt"
+          # - name-suffix: "UBSAN"
+          #   sanitizer: "undefined"
+          #   configure-options: "CC=clang CXX=clang++ LD=clang++"
+          #   debug-options: "-gmlt"
 
     steps:
     - name: Install Dependencies
