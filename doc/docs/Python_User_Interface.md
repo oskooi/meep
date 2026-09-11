@@ -7810,19 +7810,18 @@ the C/C++ libraries used by Meep.
 
 The verbosity levels are:
 
-* 0: minimal output
-* 1: a little
-* 2: a lot
-* 3: debugging
+* 0: minimal output (`VerbosityLevel.SILENT`)
+* 1: a little (`VerbosityLevel.NORMAL`)
+* 2: a lot (`VerbosityLevel.VERBOSE`)
+* 3: debugging (`VerbosityLevel.DEBUG`)
 
 An instance of `Verbosity` is created when meep is imported, and is
 accessible as `meep.verbosity`. The `meep.mpb` package also has a verbosity
 flag in its C library, and it can also be managed via the `Verbosity` class
 after `meep.mpb` is imported.
 
-Note that this class is a Singleton, meaning that each call to create a new
-`Verbosity` actually gives you the same instance. The new C `verbosity`
-flag will be added to a list of verbosity flags managed by this class.
+Note that this class is a Singleton: every `Verbosity()` gives you the same
+instance, the one already available as `meep.verbosity`.
 
 The `Verbosity` instance can be used as a global verbosity controller, and
 assignments to any instance of `Verbosity` will set the global verbosity
@@ -7835,11 +7834,10 @@ meep.verbosity(2)
 
 will set all of the managed verbosity flags to level 2.
 
-Each managed verbosity flag can also be accessed individually if desired.
-Each time a new C/C++ library verbosity flag is added to this Python class a
-new property is added which can be used to access that individual flag.
-Currently the properties that are available are named simply `meep` and
-`mpb`. This means that you can set two different verbosity levels like this:
+Each managed verbosity flag can also be accessed individually if desired,
+using the name it was registered under. Currently the names that are
+available are simply `meep` and `mpb`. This means that you can set two
+different verbosity levels like this:
 
 ```python
 verbosity = meep.verbosity # not required, it's just to save some typing
@@ -7847,44 +7845,11 @@ verbosity.meep = 2
 verbosity.mpb = 1
 ```
 
-</div>
-
-
----
-
-<a id="Verbosity.__init__"></a>
-
-<div class="class_members" markdown="1">
-
-```python
-def __init__(cvar=None, name=None, initial_level=1):
-```
-
-<div class="method_docstring" markdown="1">
-
-See `add_verbosity_var()`
-
-</div>
-
-</div>
-
-
----
-
-<a id="Verbosity.add_verbosity_var"></a>
-
-<div class="class_members" markdown="1">
-
-```python
-def add_verbosity_var(cvar=None, name=None, initial_level=1):
-```
-
-<div class="method_docstring" markdown="1">
-
-Add a new verbosity flag to be managed. `cvar` should be some object
-that has a `verbosity` attribute, such as `meep.cvar` or `mpb.cvar`.
-
-</div>
+Note that while Meep is calling MPB internally the `mpb` flag is temporarily
+overridden to one level quieter than the `meep` flag (see the RAII class
+`meep::adjust_mpb_verbosity` in `src/adjust_verbosity.hpp`). That adjustment
+is undone as soon as the call returns, so it is not observable from Python;
+it only affects how chatty MPB is during Meep's own eigenmode calculations.
 
 </div>
 
@@ -7901,7 +7866,9 @@ def get():
 
 <div class="method_docstring" markdown="1">
 
-Returns the current global verbosity level.
+Returns the current global verbosity level. This reads the first flag
+that was registered — the `meep` flag in a normal Meep session — so it
+reflects the live value of the C variable rather than a cached copy.
 
 </div>
 
@@ -7922,6 +7889,32 @@ def set(level):
 
 Validates the range, and sets the global verbosity level. Returns the
 former value.
+
+</div>
+
+</div>
+
+
+---
+
+<a id="Verbosity.temporary"></a>
+
+<div class="class_members" markdown="1">
+
+```python
+def temporary(level):
+```
+
+<div class="method_docstring" markdown="1">
+
+A context manager that sets the global verbosity level for the duration
+of a `with` block and then restores every managed flag to the level it
+had before, including when the block exists via an exception.
+
+```python
+with meep.verbosity.temporary(0):
+    sim.run(until=200)  # this part is quiet
+```
 
 </div>
 
